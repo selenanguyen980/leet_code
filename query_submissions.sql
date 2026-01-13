@@ -28,3 +28,19 @@ FROM web_logs
 SELECT COUNT(DISTINCT user_id) AS n_users, log_date
 FROM total_logs
 GROUP BY log_date;
+
+
+Prompt: Find athletes who competed for different countries across multiple Olympic games. An athlete is considered to have multiple teams if they appear in the dataset representing different countries in different Olympic competitions.
+Return all competition records for athletes who represented more than one country. Output the athlete name, country, games, sport, and medal for each of their competitions.
+
+WITH athlete_teams AS (
+SELECT name, COUNT(DISTINCT team) AS team_count
+FROM olympic_games_athletes
+GROUP BY name
+HAVING COUNT(DISTINCT team) > 1
+)
+
+SELECT o.name, o.team, o.games, o.sport, o.medal
+FROM olympic_games_athletes AS o
+INNER JOIN athlete_teams AS a
+ON o.name = a.name;
