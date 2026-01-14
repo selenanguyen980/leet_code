@@ -46,8 +46,7 @@ INNER JOIN athlete_teams AS a
 ON o.name = a.name;
 
 
-Prompt: Calculate the average score for each project, but only include projects where more than one team member has provided a score.
-Your output should include the project ID and the calculated average score for each qualifying project.
+Prompt: Calculate the average score for each project, but only include projects where more than one team member has provided a score. Your output should include the project ID and the calculated average score for each qualifying project.
 
 SELECT project_id, AVG(score) AS avg_score
 FROM project_data
