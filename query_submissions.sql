@@ -44,3 +44,12 @@ SELECT o.name, o.team, o.games, o.sport, o.medal
 FROM olympic_games_athletes AS o
 INNER JOIN athlete_teams AS a
 ON o.name = a.name;
+
+
+Prompt: Calculate the average score for each project, but only include projects where more than one team member has provided a score.
+Your output should include the project ID and the calculated average score for each qualifying project.
+
+SELECT project_id, AVG(score) AS avg_score
+FROM project_data
+GROUP BY project_id
+HAVING COUNT(DISTINCT team_member_id) > 1;
