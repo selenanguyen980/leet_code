@@ -54,7 +54,7 @@ GROUP BY project_id
 HAVING COUNT(DISTINCT team_member_id) > 1;
 
 
-Prompt: Count the unique activity types for each user, ensuring users with no activities are also included. The output should show each user's ID and their activity type count, with zero for users who have no activities.
+-- Prompt: Count the unique activity types for each user, ensuring users with no activities are also included. The output should show each user's ID and their activity type count, with zero for users who have no activities.
 
 SELECT u.user_id, COUNT(DISTINCT a.activity_type) AS n_activities
 FROM user_profiles AS u
@@ -62,3 +62,10 @@ LEFT JOIN activity_log AS a
 ON u.user_id = a.user_id
 GROUP BY u.user_id;
 
+
+-- Prompt: You're tasked with analyzing a Spotify-like dataset that captures user listening habits. For each user, calculate the total listening time and the count of unique songs they've listened to. In the database duration values are displayed in seconds. Round the total listening duration to the nearest whole minute.
+The output should contain three columns: 'user_id', 'total_listen_duration', and 'unique_song_count'.
+
+SELECT user_id, ROUND(SUM(listen_duration)/60.0) AS total_listen_duration, COUNT(DISTINCT song_id) AS unique_song_count
+FROM listening_habits
+GROUP BY user_id;
