@@ -65,3 +65,20 @@ GROUP BY u.user_id;
 SELECT user_id, ROUND(SUM(listen_duration)/60.0) AS total_listen_duration, COUNT(DISTINCT song_id) AS unique_song_count
 FROM listening_habits
 GROUP BY user_id;
+
+
+-- Prompt 8: Management wants to analyze only employees with official job titles. Find the job titles of the employees with the highest salary. 
+-- If multiple employees have the same highest salary, include all their job titles.
+WITH ranked_titles AS (
+SELECT t.worker_title,
+RANK() OVER (
+ORDER BY w.salary DESC
+) AS highest_salary
+FROM worker AS w
+INNER JOIN title AS t
+ON w.worker_id = t.worker_ref_id
+)
+
+SELECT worker_title
+FROM ranked_titles
+WHERE highest_salary = 1;
