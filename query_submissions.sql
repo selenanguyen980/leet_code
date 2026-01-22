@@ -82,3 +82,24 @@ FROM customers AS c
 LEFT JOIN orders AS o
 ON c.id = o.cust_id
 ORDER BY c.first_name, o.order_details ASC;
+
+
+-- Prompt 9:
+WITH avg_salary AS (
+SELECT department, job_title, ROUND(AVG(base_salary)) AS avg_base_salary
+FROM employee_compensation
+GROUP BY department, job_title
+),
+ranked_titles AS (
+SELECT department, job_title, avg_base_salary,
+RANK() OVER (
+PARTITION BY department
+ORDER BY avg_base_salary DESC
+) AS rnk
+FROM avg_salary
+)
+
+SELECT department, job_title, avg_base_salary
+FROM ranked_titles
+WHERE rnk = 1
+ORDER BY avg_base_salary DESC;
