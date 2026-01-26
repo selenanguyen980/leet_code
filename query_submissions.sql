@@ -143,8 +143,7 @@ LEFT JOIN activity_log AS a
 GROUP BY u.user_id;
 
 
--- Prompt 9: Analyze user listening habits.
--- Calculate total listening time (minutes) and unique song count per user.
+-- Prompt 9: Analyze user listening habits. Calculate total listening time (minutes) and unique song count per user.
 SELECT
     user_id,
     ROUND(SUM(listen_duration) / 60.0) AS total_listen_duration,
@@ -179,8 +178,7 @@ ORDER BY
     o.order_details ASC;
 
 
--- Prompt 12: Find doctors with the last name of 'Johnson' in the employee list.
--- The output should contain both their first and last names.
+-- Prompt 12: Find doctors with the last name of 'Johnson' in the employee list. The output should contain both their first and last names.
 SELECT
     first_name,
     last_name
