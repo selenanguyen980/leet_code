@@ -101,10 +101,19 @@ WHERE highest_salary = 1;
 
 
 -- Prompt 5: Count the number of unique users per day who logged in from either a mobile device or web.
+-- Output the date and the corresponding number of users.
 WITH total_logs AS (
-    SELECT user_id, log_date FROM mobile_logs
+    SELECT
+        user_id,
+        log_date
+    FROM mobile_logs
+
     UNION ALL
-    SELECT user_id, log_date FROM web_logs
+
+    SELECT
+        user_id,
+        log_date
+    FROM web_logs
 )
 
 SELECT
@@ -115,6 +124,7 @@ GROUP BY log_date;
 
 
 -- Prompt 6: Return the total number of comments received for each user in the 30-day period up to and including 2020-02-10.
+-- Don't output users who haven't received any comment in the defined time period.
 SELECT
     user_id,
     SUM(number_of_comments) AS number_of_comments
@@ -124,7 +134,20 @@ WHERE created_at >= '2020-02-10' - INTERVAL 30 DAY
 GROUP BY user_id;
 
 
--- Prompt 7: Calculate the average score for each project, but only include projects where more than one team member has provided a score.
+-- Prompt 7: Measure pay variability for the Data Engineer role.
+-- Context: Created for a compensation analysis project to support internal salary benchmarking.
+SELECT
+    job_title,
+    MAX(base_salary) - MIN(base_salary) AS salary_range,
+    ROUND(AVG(base_salary)) AS avg_salary,
+    ROUND(STDDEV(base_salary)) AS salary_std_dev
+FROM employee_compensation
+WHERE lower(job_title) = 'data engineer'
+GROUP BY job_title;
+
+
+-- Prompt 8: Calculate the average score for each project, but only include projects where more than one team member has provided a score.
+-- Your output should include the project ID and the calculated average score for each qualifying project.
 SELECT
     project_id,
     AVG(score) AS avg_score
@@ -133,7 +156,8 @@ GROUP BY project_id
 HAVING COUNT(DISTINCT team_member_id) > 1;
 
 
--- Prompt 8: Count the unique activity types for each user, ensuring users with no activities are also included.
+-- Prompt 9: Count the unique activity types for each user, ensuring users with no activities are also included.
+-- The output should show each user's ID and their activity type count, with zero for users who have no activities.
 SELECT
     u.user_id,
     COUNT(DISTINCT a.activity_type) AS n_activities
@@ -143,7 +167,8 @@ LEFT JOIN activity_log AS a
 GROUP BY u.user_id;
 
 
--- Prompt 9: Analyze user listening habits. Calculate total listening time (minutes) and unique song count per user.
+-- Prompt 10: Analyze user listening habits.
+-- Calculate total listening time (minutes) and unique song count per user.
 SELECT
     user_id,
     ROUND(SUM(listen_duration) / 60.0) AS total_listen_duration,
@@ -152,7 +177,8 @@ FROM listening_habits
 GROUP BY user_id;
 
 
--- Prompt 10: Find the average number of bathrooms and bedrooms for each city’s property types.
+-- Prompt 11: Find the average number of bathrooms and bedrooms for each city’s property types.
+-- Output the result along with the city name and the property type.
 SELECT
     city,
     property_type,
@@ -164,7 +190,8 @@ GROUP BY
     property_type;
 
 
--- Prompt 11: Find the details of each customer regardless of whether the customer made an order.
+-- Prompt 12: Find the details of each customer regardless of whether the customer made an order.
+-- Output the customer's first name, last name, and the city along with the order details.
 SELECT
     c.first_name,
     c.last_name,
@@ -178,7 +205,8 @@ ORDER BY
     o.order_details ASC;
 
 
--- Prompt 12: Find doctors with the last name of 'Johnson' in the employee list. The output should contain both their first and last names.
+-- Prompt 13: Find doctors with the last name of 'Johnson' in the employee list.
+-- The output should contain both their first and last names.
 SELECT
     first_name,
     last_name
