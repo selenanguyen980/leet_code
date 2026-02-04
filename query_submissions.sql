@@ -221,10 +221,20 @@ WHERE lower(last_name) = 'johnson'
   AND lower(profession) = 'doctor';
 
 
--- Prompt 16: Find the gender that has made the most number of doctor appointments. Output the gender along with the corresponding number of appointments.
+-- Prompt 16: Find the gender that has made the most number of doctor appointments.
+-- Output the gender along with the corresponding number of appointments.
 SELECT
     gender,
     COUNT(appointmentid) AS n_appointments
 FROM medical_appointments
 GROUP BY gender
 HAVING gender = 'F';
+
+
+-- Prompt 17: Find the total number of records that belong to each variety in the dataset.
+-- Output the variety along with the corresponding number of records. Order records by the variety in ascending order.
+SELECT
+    variety,
+    COUNT(*)
+FROM iris
+GROUP BY variety;
