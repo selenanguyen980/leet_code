@@ -1,34 +1,4 @@
--- Prompt 1: Identify the highest-paid job title within each department based on average base salary.
--- Context: Created for a compensation analysis project to support internal salary benchmarking.
-WITH avg_salary AS (
-    SELECT
-        department,
-        job_title,
-        ROUND(AVG(base_salary)) AS avg_base_salary
-    FROM employee_compensation
-    GROUP BY department, job_title
-),
-ranked_titles AS (
-    SELECT
-        department,
-        job_title,
-        avg_base_salary,
-        RANK() OVER (
-            PARTITION BY department
-            ORDER BY avg_base_salary DESC
-        ) AS rnk
-    FROM avg_salary
-)
-SELECT
-    department,
-    job_title,
-    avg_base_salary
-FROM ranked_titles
-WHERE rnk = 1
-ORDER BY avg_base_salary DESC;
-
-
--- Prompt 2: You are provided with an already aggregated dataset from Amazon that contains detailed information about sales across different products and marketplaces.
+-- Prompt 1: You are provided with an already aggregated dataset from Amazon that contains detailed information about sales across different products and marketplaces.
 -- Your task is to list the top 3 sellers in each product category for January. In case of ties, rank them the same and include all sellers tied for that position.
 WITH ranked_sellers AS (
     SELECT
@@ -55,7 +25,7 @@ FROM ranked_sellers
 WHERE rnk <= 3;
 
 
--- Prompt 3: Find athletes who competed for different countries across multiple Olympic games.
+-- Prompt 2: Find athletes who competed for different countries across multiple Olympic games.
 -- An athlete is considered to have multiple teams if they appear in the dataset representing different countries in different Olympic competitions.
 WITH athlete_teams AS (
     SELECT
@@ -76,7 +46,7 @@ INNER JOIN athlete_teams AS a
     ON o.name = a.name;
 
 
--- Prompt 4: Order all countries by the year they first participated in the Olympics. Output the National Olympics Committee (NOC) name along with the desired year.
+-- Prompt 3: Order all countries by the year they first participated in the Olympics. Output the National Olympics Committee (NOC) name along with the desired year.
 -- Sort records in ascending order by year, and alphabetically by NOC.
 WITH ranked_years AS (
     SELECT
@@ -96,7 +66,7 @@ WHERE rn = 1
 ORDER BY year ASC, noc ASC;
 
 
--- Prompt 5: Management wants to analyze only employees with official job titles. Find the job titles of the employees with the highest salary.
+-- Prompt 4: Management wants to analyze only employees with official job titles. Find the job titles of the employees with the highest salary.
 -- If multiple employees have the same highest salary, include all their job titles.
 WITH ranked_titles AS (
     SELECT
@@ -112,6 +82,25 @@ SELECT
     worker_title
 FROM ranked_titles
 WHERE highest_salary = 1;
+
+
+-- Prompt 5: Rank the top five customers by total purchase value. If multiple customers have the same total purchase value, treat them as ties and include all tied customers in the result.
+-- Ensure that the ranking does not skip numbers due to ties (e.g., if two customers share rank 2, the next rank should be 3).
+WITH ranked_customers AS (
+    SELECT
+        customer_id,
+        total_purchase_value,
+        DENSE_RANK() OVER (
+            ORDER BY total_purchase_value DESC
+        ) AS rnk
+    FROM customer_purchase
+)
+SELECT
+    customer_id,
+    total_purchase_value,
+    rnk
+FROM ranked_customers
+WHERE rnk <= 5;
 
 
 -- Prompt 6: Identify the products that exist in the inventory but have never been sold.
@@ -150,19 +139,7 @@ WHERE created_at >= '2020-02-10' - INTERVAL 30 DAY
 GROUP BY user_id;
 
 
--- Prompt 9: Measure pay variability for the Data Engineer role.
--- Context: Created for a compensation analysis project to support internal salary benchmarking.
-SELECT
-    job_title,
-    MAX(base_salary) - MIN(base_salary) AS salary_range,
-    ROUND(AVG(base_salary)) AS avg_salary,
-    ROUND(STDDEV(base_salary)) AS salary_std_dev
-FROM employee_compensation
-WHERE lower(job_title) = 'data engineer'
-GROUP BY job_title;
-
-
--- Prompt 10: Calculate the average score for each project, but only include projects where more than one team member has provided a score.
+-- Prompt 9: Calculate the average score for each project, but only include projects where more than one team member has provided a score.
 -- Your output should include the project ID and the calculated average score for each qualifying project.
 SELECT
     project_id,
@@ -172,7 +149,7 @@ GROUP BY project_id
 HAVING COUNT(DISTINCT team_member_id) > 1;
 
 
--- Prompt 11: Count the unique activity types for each user, ensuring users with no activities are also included.
+-- Prompt 10: Count the unique activity types for each user, ensuring users with no activities are also included.
 -- The output should show each user's ID and their activity type count, with zero for users who have no activities.
 SELECT
     u.user_id,
@@ -183,7 +160,7 @@ LEFT JOIN activity_log AS a
 GROUP BY u.user_id;
 
 
--- Prompt 12: You're tasked with analyzing a Spotify-like dataset that captures user listening habits.
+-- Prompt 11: You're tasked with analyzing a Spotify-like dataset that captures user listening habits.
 -- For each user, calculate the total listening time and the count of unique songs they've listened to.
 SELECT
     user_id,
@@ -193,8 +170,7 @@ FROM listening_habits
 GROUP BY user_id;
 
 
--- Prompt 13: Find the average number of bathrooms and bedrooms for each city’s property types.
--- Output the result along with the city name and the property type.
+-- Prompt 12: Find the average number of bathrooms and bedrooms for each city’s property types. Output the result along with the city name and the property type.
 SELECT
     city,
     property_type,
@@ -204,7 +180,7 @@ FROM airbnb_search_details
 GROUP BY city, property_type;
 
 
--- Prompt 14: Find all the songs that were top-ranked (at first position) at least once since the year 2005.
+-- Prompt 13: Find all the songs that were top-ranked (at first position) at least once since the year 2005.
 SELECT DISTINCT
     song_name
 FROM billboard_top_100_year_end
@@ -212,8 +188,8 @@ WHERE year_rank = 1
   AND year >= 2005;
 
 
--- Prompt 15: Find the details of each customer regardless of whether the customer made an order.
--- Output the customer's first name, last name, and the city along with the order details.
+-- Prompt 14: Find the details of each customer regardless of whether the customer made an order. Output the customer's first name, last name, and the city along with the order details.
+-- Sort records based on the customer's first name and the order details in ascending order.
 SELECT
     c.first_name,
     c.last_name,
@@ -225,8 +201,7 @@ LEFT JOIN orders AS o
 ORDER BY c.first_name, o.order_details ASC;
 
 
--- Prompt 16: Find doctors with the last name of 'Johnson' in the employee list.
--- The output should contain both their first and last names.
+-- Prompt 15: Find doctors with the last name of 'Johnson' in the employee list. The output should contain both their first and last names.
 SELECT
     first_name,
     last_name
@@ -235,7 +210,7 @@ WHERE lower(last_name) = 'johnson'
   AND lower(profession) = 'doctor';
 
 
--- Prompt 17: Find the gender that has made the most number of doctor appointments.
+-- Prompt 16: Find the gender that has made the most number of doctor appointments.
 -- Output the gender along with the corresponding number of appointments.
 SELECT
     gender,
@@ -245,7 +220,7 @@ GROUP BY gender
 HAVING gender = 'F';
 
 
--- Prompt 18: Find the total number of records that belong to each variety in the dataset.
+-- Prompt 17: Find the total number of records that belong to each variety in the dataset.
 -- Output the variety along with the corresponding number of records. Order records by the variety in ascending order.
 SELECT
     variety,
