@@ -1,6 +1,9 @@
-## StrataScratch SQL Exercises
+## LeetCode SQL Exercises
 
-This repository contains my successfully completed SQL solutions from StrataScratch.  
-It serves as a learning log to practice and strengthen core SQL concepts, including joins, aggregations, subqueries, window functions, and CTEs.
+This repository contains my daily coding practice, primarily focused on SQL problems from platforms like LeetCode and StrataScratch.
 
-Each query represents a problem I’ve successfully solved. This repository is used for ongoing learning while building strong problem-solving patterns for technical interviews.
+It serves as a learning log to practice and strengthen core SQL concepts such as joins, aggregations, subqueries, window functions, and CTEs, while documenting my problem-solving approach over time.
+
+Each query represents a problem I’ve successfully solved and kept here for consistency, review, and interview preparation.
+
+Queries in this repository are ordered by difficulty in descending order.
