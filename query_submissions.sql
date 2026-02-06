@@ -66,22 +66,16 @@ WHERE rn = 1
 ORDER BY year ASC, noc ASC;
 
 
--- Prompt 4: Management wants to analyze only employees with official job titles. Find the job titles of the employees with the highest salary.
--- If multiple employees have the same highest salary, include all their job titles.
-WITH ranked_titles AS (
-    SELECT
-        t.worker_title,
-        RANK() OVER (
-            ORDER BY w.salary DESC
-        ) AS highest_salary
-    FROM worker AS w
-    INNER JOIN title AS t
-        ON w.worker_id = t.worker_ref_id
-)
+-- Prompt 4: As a data scientist at Amazon Prime Video, you are tasked with enhancing the in-flight entertainment experience for Amazon’s airline partners.
+-- For flight 101, find movies whose runtime is less than or equal to the flight's duration.
 SELECT
-    worker_title
-FROM ranked_titles
-WHERE highest_salary = 1;
+    f.flight_id,
+    m.movie_id,
+    m.duration
+FROM flight_schedule AS f
+INNER JOIN entertainment_catalog AS m
+    ON f.flight_duration >= m.duration
+WHERE f.flight_id = 101;
 
 
 -- Prompt 5: Rank the top five customers by total purchase value. If multiple customers have the same total purchase value, treat them as ties and include all tied customers in the result.
@@ -127,7 +121,8 @@ LEFT JOIN sales_transactions AS s
 WHERE s.product_id IS NULL;
 
 
--- Prompt 8: Count the number of unique users per day who logged in from either a mobile device or web. Output the date and the corresponding number of users.
+-- Prompt 8: Count the number of unique users per day who logged in from either a mobile device or web.
+-- Output the date and the corresponding number of users.
 WITH total_logs AS (
     SELECT user_id, log_date FROM mobile_logs
     UNION ALL
@@ -182,7 +177,8 @@ FROM listening_habits
 GROUP BY user_id;
 
 
--- Prompt 13: Find the average number of bathrooms and bedrooms for each city’s property types. Output the result along with the city name and the property type.
+-- Prompt 13: Find the average number of bathrooms and bedrooms for each city’s property types.
+-- Output the result along with the city name and the property type.
 SELECT
     city,
     property_type,
@@ -213,7 +209,8 @@ LEFT JOIN orders AS o
 ORDER BY c.first_name, o.order_details ASC;
 
 
--- Prompt 16: Find doctors with the last name of 'Johnson' in the employee list. The output should contain both their first and last names.
+-- Prompt 16: Find doctors with the last name of 'Johnson' in the employee list.
+-- The output should contain both their first and last names.
 SELECT
     first_name,
     last_name
