@@ -177,8 +177,7 @@ FROM listening_habits
 GROUP BY user_id;
 
 
--- Prompt 13: Find the average number of bathrooms and bedrooms for each city’s property types.
--- Output the result along with the city name and the property type.
+-- Prompt 13: Find the average number of bathrooms and bedrooms for each city’s property types. Output the result along with the city name and the property type.
 SELECT
     city,
     property_type,
@@ -236,3 +235,13 @@ SELECT
     COUNT(*)
 FROM iris
 GROUP BY variety;
+
+
+-- Prompt 19: Find the total number of housing units completed for each year.
+-- Output the year along with the total number of housings. Order the result by year in ascending order.
+SELECT DISTINCT
+    year,
+    SUM(south + west + midwest + northeast) AS total_n_housings
+FROM housing_units_completed_us
+GROUP BY year
+ORDER BY year ASC;
