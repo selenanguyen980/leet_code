@@ -177,7 +177,8 @@ FROM listening_habits
 GROUP BY user_id;
 
 
--- Prompt 13: Find the average number of bathrooms and bedrooms for each city’s property types. Output the result along with the city name and the property type.
+-- Prompt 13: Find the average number of bathrooms and bedrooms for each city’s property types.
+-- Output the result along with the city name and the property type.
 SELECT
     city,
     property_type,
@@ -245,3 +246,15 @@ SELECT DISTINCT
 FROM housing_units_completed_us
 GROUP BY year
 ORDER BY year ASC;
+
+
+-- Prompt 20: Find how many reviews exist for each review score given to 'Hotel Arena'.
+-- Output the hotel name ('Hotel Arena'), each review score, and the number of reviews for that score.
+SELECT
+    hotel_name,
+    reviewer_score,
+    COUNT(reviewer_score) AS score_count
+FROM hotel_reviews
+WHERE lower(hotel_name) = 'hotel arena'
+GROUP BY hotel_name,
+    reviewer_score;
