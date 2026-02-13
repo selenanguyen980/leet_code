@@ -277,3 +277,18 @@ SELECT
     SUM(adwords_earnings) AS total_earnings
 FROM google_adwords_earnings
 GROUP BY business_type;
+
+
+-- Prompt 23: Find the number of Yelp businesses that sell pizza.
+SELECT
+    COUNT(business_id) AS n_of_businesses
+FROM yelp_business
+WHERE categories LIKE '%pizza%';
+
+
+-- Prompt 24: Find employees who started in June and have even-numbered employee IDs.
+SELECT *
+FROM worker
+WHERE joining_date >= '2014-06-01'
+  AND joining_date < '2014-07-01'
+  AND worker_id % 2 = 0;
