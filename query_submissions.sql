@@ -292,3 +292,11 @@ FROM worker
 WHERE joining_date >= '2014-06-01'
   AND joining_date < '2014-07-01'
   AND worker_id % 2 = 0;
+
+
+-- Prompt 25: Find employees who started in February and have odd-numbered employee IDs.
+SELECT *
+FROM worker
+WHERE joining_date >= '2014-02-01'
+  AND joining_date < '2014-03-01'
+  AND worker_id % 2 = 1;
