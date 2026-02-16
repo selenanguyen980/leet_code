@@ -300,3 +300,12 @@ FROM worker
 WHERE joining_date >= '2014-02-01'
   AND joining_date < '2014-03-01'
   AND worker_id % 2 = 1;
+
+
+-- Prompt 26: Find the number of crime occurrences for each day of the week.
+-- Output the day alongside the corresponding crime count.
+SELECT
+    day_of_week,
+    COUNT(incidnt_num) AS n_of_occurrences
+FROM sf_crime_incidents_2014_01
+GROUP BY day_of_week;
