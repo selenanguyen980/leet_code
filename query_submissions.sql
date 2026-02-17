@@ -309,3 +309,11 @@ SELECT
     COUNT(incidnt_num) AS n_of_occurrences
 FROM sf_crime_incidents_2014_01
 GROUP BY day_of_week;
+
+
+-- Prompt 27: What is the total sales revenue of Samantha and Lisa?
+SELECT
+    SUM(sales_revenue) AS total_revenue
+FROM sales_performance
+WHERE salesperson = 'Samantha'
+   OR salesperson = 'Lisa';
