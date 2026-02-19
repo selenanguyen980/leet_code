@@ -332,3 +332,6 @@ SELECT
 FROM sales_performance
 WHERE salesperson = 'Samantha'
    OR salesperson = 'Lisa';
+
+-- Prompt 30: Determine whether hosts or guests leave higher review scores on average.
+-- Return the group (host or guest) with the higher average score and the corresponding average rounded to 2 decimal places.
