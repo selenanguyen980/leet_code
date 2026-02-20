@@ -229,14 +229,26 @@ WHERE lower(last_name) = 'johnson'
   AND lower(profession) = 'doctor';
 
 
--- Prompt 18: Find the number of relationships that user  with id == 1 is not part of.
+-- Prompt 18: Determine whether hosts or guests leave higher review scores on average.
+-- Return the group (host or guest) with the higher average score and the corresponding average rounded to 2 decimal places.
+SELECT from_type,
+   AVG(review_score) AS high_avg_score
+FROM airbnb_reviews
+WHERE from_type = 'guest'
+    OR from_type = 'host'
+GROUP BY from_type
+ORDER BY high_avg_score DESC
+LIMIT 1;
+
+
+-- Prompt 19: Find the number of relationships that user  with id == 1 is not part of.
 SELECT COUNT(*) AS relationships_without_user1
 FROM facebook_friends
 WHERE user1 <> 1
     AND user2 <> 1;
 
 
--- Prompt 19: Find the total number of searches for houses in Westlake neighborhood with a TV among the amenities.
+-- Prompt 20: Find the total number of searches for houses in Westlake neighborhood with a TV among the amenities.
 SELECT COUNT(id) AS n_searches
 FROM airbnb_search_details
 WHERE property_type = 'House'
@@ -244,7 +256,7 @@ WHERE property_type = 'House'
     AND amenities LIKE '%TV%';
 
 
--- Prompt 20: Find the gender that has made the most number of doctor appointments.
+-- Prompt 21: Find the gender that has made the most number of doctor appointments.
 -- Output the gender along with the corresponding number of appointments.
 SELECT
     gender,
@@ -254,7 +266,7 @@ GROUP BY gender
 HAVING gender = 'F';
 
 
--- Prompt 21: Find the total number of records that belong to each variety in the dataset.
+-- Prompt 22: Find the total number of records that belong to each variety in the dataset.
 -- Output the variety along with the corresponding number of records. Order records by the variety in ascending order.
 SELECT
     variety,
@@ -263,7 +275,7 @@ FROM iris
 GROUP BY variety;
 
 
--- Prompt 22: Find the total number of housing units completed for each year.
+-- Prompt 23: Find the total number of housing units completed for each year.
 -- Output the year along with the total number of housings. Order the result by year in ascending order.
 SELECT DISTINCT
     year,
@@ -273,7 +285,7 @@ GROUP BY year
 ORDER BY year ASC;
 
 
--- Prompt 23: Find how many reviews exist for each review score given to 'Hotel Arena'.
+-- Prompt 24: Find how many reviews exist for each review score given to 'Hotel Arena'.
 -- Output the hotel name ('Hotel Arena'), each review score, and the number of reviews for that score.
 SELECT
     hotel_name,
@@ -285,7 +297,7 @@ GROUP BY hotel_name,
     reviewer_score;
 
 
--- Prompt 24: Find the total AdWords earnings for each business type.
+-- Prompt 25: Find the total AdWords earnings for each business type.
 -- Output the business types along with the total earnings.
 SELECT
     business_type,
@@ -294,14 +306,14 @@ FROM google_adwords_earnings
 GROUP BY business_type;
 
 
--- Prompt 25: Find the number of Yelp businesses that sell pizza.
+-- Prompt 26: Find the number of Yelp businesses that sell pizza.
 SELECT
     COUNT(business_id) AS n_of_businesses
 FROM yelp_business
 WHERE categories LIKE '%pizza%';
 
 
--- Prompt 26: Find employees who started in June and have even-numbered employee IDs.
+-- Prompt 27: Find employees who started in June and have even-numbered employee IDs.
 SELECT *
 FROM worker
 WHERE joining_date >= '2014-06-01'
@@ -309,7 +321,7 @@ WHERE joining_date >= '2014-06-01'
   AND worker_id % 2 = 0;
 
 
--- Prompt 27: Find employees who started in February and have odd-numbered employee IDs.
+-- Prompt 28: Find employees who started in February and have odd-numbered employee IDs.
 SELECT *
 FROM worker
 WHERE joining_date >= '2014-02-01'
@@ -317,7 +329,7 @@ WHERE joining_date >= '2014-02-01'
   AND worker_id % 2 = 1;
 
 
--- Prompt 28: Find the number of crime occurrences for each day of the week.
+-- Prompt 29: Find the number of crime occurrences for each day of the week.
 -- Output the day alongside the corresponding crime count.
 SELECT
     day_of_week,
@@ -326,12 +338,9 @@ FROM sf_crime_incidents_2014_01
 GROUP BY day_of_week;
 
 
--- Prompt 29: What is the total sales revenue of Samantha and Lisa?
+-- Prompt 30: What is the total sales revenue of Samantha and Lisa?
 SELECT
     SUM(sales_revenue) AS total_revenue
 FROM sales_performance
 WHERE salesperson = 'Samantha'
    OR salesperson = 'Lisa';
-
--- Prompt 30: Determine whether hosts or guests leave higher review scores on average.
--- Return the group (host or guest) with the higher average score and the corresponding average rounded to 2 decimal places.
