@@ -365,3 +365,10 @@ FROM yelp_reviews
 WHERE business_name = 'Lo-lo''s Chicken & Waffles'
 GROUP BY stars
 ORDER BY stars ASC;
+
+
+-- Prompt 33: Find the number of 5-star reviews earned by Lo-Lo's Chicken & Waffles.
+SELECT COUNT(stars) AS n_of_5stars
+FROM yelp_reviews
+WHERE business_name = 'Lo-Lo''s Chicken & Waffles'
+    AND stars = '5';
