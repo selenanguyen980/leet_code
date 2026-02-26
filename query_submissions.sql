@@ -383,6 +383,7 @@ ORDER BY stars ASC;
 
 
 -- Prompt 34: Find the number of US-based wineries that have expensive wines. A wine is considered to be expensive if its price is $200 or more.
-SELECT COUNT(id) AS n_wineries
+SELECT COUNT(DISTINCT winery) AS n_wineries
 FROM winemag_p1
-WHERE price > 200;
+WHERE country = 'US'
+  AND price >= 200;
