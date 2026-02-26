@@ -356,7 +356,7 @@ FROM sales_performance
 WHERE salesperson = 'Samantha'
    OR salesperson = 'Lisa';
 
-
+*
 -- Prompt 32: Find the number of reviews received by Lo-Lo's Chicken & Waffles for each star. 
 -- Output the number of stars along with the corresponding number of reviews. Sort records by stars in ascending order.
 SELECT stars,
@@ -372,3 +372,11 @@ SELECT COUNT(stars) AS n_of_5stars
 FROM yelp_reviews
 WHERE business_name = 'Lo-Lo''s Chicken & Waffles'
     AND stars = '5';
+
+-- Prompt 34: Find the number of entries per star.
+-- Output each number of stars along with the corresponding number of entries. Order records by stars in ascending order.
+SELECT stars,
+    COUNT(review_id) AS n_entries
+FROM yelp_reviews
+GROUP BY stars
+ORDER BY stars ASC;
