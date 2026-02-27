@@ -387,3 +387,10 @@ SELECT COUNT(DISTINCT winery) AS n_wineries
 FROM winemag_p1
 WHERE country = 'US'
   AND price >= 200;
+
+
+-- Prompt 35: Find wine varieties tasted by 'Roger Voss' and with a value in the 'region_1' column of the dataset. Output unique variety names only.
+SELECT DISTINCT variety
+FROM winemag_p2
+WHERE taster_name = 'Roger Voss'
+    AND region_1 IS NOT NULL;
