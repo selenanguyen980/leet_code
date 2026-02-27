@@ -394,3 +394,12 @@ SELECT DISTINCT variety
 FROM winemag_p2
 WHERE taster_name = 'Roger Voss'
     AND region_1 IS NOT NULL;
+
+
+-- Prompt 36: Find the total costs and total customers acquired in each year.
+-- Output the year along with corresponding total money spent and total acquired customers.
+SELECT year,
+    SUM(customers_acquired) AS total_customers,
+    SUM(money_spent) AS total_costs
+FROM uber_advertising
+GROUP BY year;
