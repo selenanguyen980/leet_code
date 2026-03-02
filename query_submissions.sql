@@ -403,3 +403,13 @@ SELECT year,
     SUM(money_spent) AS total_costs
 FROM uber_advertising
 GROUP BY year;
+
+
+-- Prompt 37: Find the average cost of each request status. Request status can be either 'success' or 'fail'.
+-- Output the request status along with the average cost.
+SELECT request_status,
+    AVG(monetary_cost) AS avg_cost
+FROM uber_ride_requests
+WHERE request_status = 'success'
+    OR request_status = 'fail'
+GROUP BY request_status;
