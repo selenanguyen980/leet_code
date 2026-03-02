@@ -413,3 +413,11 @@ FROM uber_ride_requests
 WHERE request_status = 'success'
     OR request_status = 'fail'
 GROUP BY request_status;
+
+
+-- Prompt 38: Find the hour with the highest gasoline cost. Assume there's only 1 hour with the highest gas cost.
+SELECT hour
+FROM lyft_rides
+GROUP BY hour
+ORDER BY MAX(gasoline_cost) DESC
+LIMIT 1;
