@@ -421,3 +421,6 @@ FROM lyft_rides
 GROUP BY hour
 ORDER BY MAX(gasoline_cost) DESC
 LIMIT 1;
+
+
+-- Prompt 39: Find all Lyft rides which happened on rainy days before noon.
