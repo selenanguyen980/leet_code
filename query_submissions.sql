@@ -424,3 +424,7 @@ LIMIT 1;
 
 
 -- Prompt 39: Find all Lyft rides which happened on rainy days before noon.
+SELECT *
+FROM lyft_rides
+WHERE weather = 'rainy'
+    AND hour < 12;
