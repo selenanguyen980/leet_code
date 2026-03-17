@@ -443,3 +443,13 @@ SELECT advertising_channel
 FROM uber_advertising
 WHERE year = 2019
     AND money_spent > 100000;
+
+
+-- Prompt 42: Find songs that are ranked between 8-10.
+-- Output the track name along with the corresponding position, ordered ascendingly.
+SELECT trackname,
+    position
+FROM spotify_worldwide_daily_song_ranking
+WHERE position BETWEEN 8 
+    AND 10
+ORDER BY position ASC;
