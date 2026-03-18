@@ -453,3 +453,10 @@ FROM spotify_worldwide_daily_song_ranking
 WHERE position BETWEEN 8 
     AND 10
 ORDER BY position ASC;
+
+
+-- Prompt 43: Find the total number of streams for the top 100 ranked songs.
+SELECT SUM(streams) AS total_n_streams
+FROM spotify_worldwide_daily_song_ranking
+WHERE position BETWEEN 1
+    AND 100;
