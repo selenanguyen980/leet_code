@@ -467,5 +467,3 @@ SELECT SUM(streams) AS total_n_streams
 FROM spotify_worldwide_daily_song_ranking
 WHERE position BETWEEN 1
     AND 100;
-
--- Prompt 44: 
