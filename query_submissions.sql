@@ -455,8 +455,17 @@ WHERE position BETWEEN 8
 ORDER BY position ASC;
 
 
--- Prompt 43: Find the total number of streams for the top 100 ranked songs.
+-- Prompt 43: Find the year that Uber acquired more than 2000 customers through advertising using celebrities.
+SELECT year
+FROM uber_advertising
+WHERE advertising_channel = 'celebrities'
+    AND customers_acquired > 2000;
+
+
+-- Prompt 44: Find the total number of streams for the top 100 ranked songs.
 SELECT SUM(streams) AS total_n_streams
 FROM spotify_worldwide_daily_song_ranking
 WHERE position BETWEEN 1
     AND 100;
+
+-- Prompt 44: 
